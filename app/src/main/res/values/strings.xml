@@ -1,0 +1,228 @@
+<resources>
+    <string name="app_name">Planora</string>
+    <string name="app_tagline">Smart Task Planner</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_calendar">Calendar</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_focus">Focus</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home Screen -->
+    <string name="greeting_good_morning">Good morning ☀️</string>
+    <string name="greeting_good_afternoon">Good afternoon 🌤️</string>
+    <string name="greeting_good_evening">Good evening 🌙</string>
+    <string name="greeting_good_night">Good night 🌌</string>
+    <string name="home_add_task">Add Task</string>
+    <string name="home_todays_focus">Today\'s Focus</string>
+    <string name="home_streak_format">%1$d d streak</string>
+    <string name="home_progress_all_clear">All clear! Plan your upcoming tasks.</string>
+    <string name="home_progress_awesome">Awesome! You completed all today\'s tasks!</string>
+    <string name="home_progress_status">%1$d of %2$d tasks completed</string>
+    <string name="home_stat_today">Today</string>
+    <string name="home_stat_done">Done</string>
+    <string name="home_stat_overdue">Overdue</string>
+
+    <!-- Home Filter Tabs -->
+    <string name="tab_today">Today</string>
+    <string name="tab_pinned">Pinned</string>
+    <string name="tab_overdue">Overdue</string>
+    <string name="tab_all">All Tasks</string>
+
+    <!-- Empty States -->
+    <string name="empty_today_title">No tasks for today!</string>
+    <string name="empty_today_subtitle">You\'re all set! Add a task below to get started.</string>
+    <string name="empty_pinned_title">No pinned tasks</string>
+    <string name="empty_pinned_subtitle">Pin your most important tasks to keep them handy.</string>
+    <string name="empty_overdue_title">No overdue tasks</string>
+    <string name="empty_overdue_subtitle">Great job! You have no delayed tasks.</string>
+    <string name="empty_all_title">No active tasks</string>
+    <string name="empty_all_subtitle">Create your next task using the quick add bar or \'+\'.</string>
+    <string name="empty_create_task">Create Task</string>
+    <string name="empty_no_tasks_found">No tasks found</string>
+    <string name="empty_no_tasks_subtitle">You\'re all caught up! Create a new task to get started.</string>
+
+    <!-- Notification Preference Prompt -->
+    <string name="notif_prompt_title">Notification Preference</string>
+    <string name="notif_prompt_message">How would you like to receive task reminder alerts when tasks are due?</string>
+    <string name="notif_option_bar_title">Standard Notification Bar</string>
+    <string name="notif_option_bar_desc">High priority banner with quick complete &amp; snooze actions</string>
+    <string name="notif_option_fullscreen_title">Full Screen Alert Window</string>
+    <string name="notif_option_fullscreen_desc">Instant full-screen alarm window over lock screen for clear focus</string>
+    <string name="notif_prompt_footer">You can change this anytime later in Settings.</string>
+
+    <!-- Task Item Actions & States -->
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_restore">Restore</string>
+    <string name="action_pin">Pin</string>
+    <string name="action_unpin">Unpin</string>
+    <string name="action_favorite">Favorite</string>
+    <string name="action_postpone_tomorrow">Postpone to Tomorrow</string>
+    <string name="action_complete">Complete</string>
+    <string name="action_archive">Archive</string>
+    <string name="action_unarchive">Unarchive</string>
+
+    <!-- Calendar Screen -->
+    <string name="calendar_title">Calendar Agenda</string>
+    <string name="calendar_today_button">Today</string>
+    <string name="calendar_no_tasks_title">No scheduled tasks</string>
+    <string name="calendar_no_tasks_subtitle">You have no tasks due on this date.</string>
+    <string name="calendar_no_tasks_portrait_subtitle">Tap \'+\' to add a task for this date.</string>
+    <string name="calendar_scheduled_one">1 task scheduled</string>
+    <string name="calendar_scheduled_count">%1$d tasks scheduled</string>
+    <string name="calendar_prev_month">Previous Month</string>
+    <string name="calendar_next_month">Next Month</string>
+
+    <!-- Search & Filter Screen -->
+    <string name="search_title">Search &amp; Filter</string>
+    <string name="search_placeholder">Search by task name, notes, or tags…</string>
+    <string name="search_clear_all">Clear All</string>
+    <string name="search_clear">Clear search</string>
+    <string name="filter_priority_header">Filter by Priority</string>
+    <string name="filter_all_tasks">All Tasks</string>
+    <string name="search_matching_tasks">Matching Tasks</string>
+    <string name="search_count_found">%1$d found</string>
+    <string name="search_no_matching_title">No matching tasks</string>
+    <string name="search_no_matching_subtitle">Try adjusting your search query or priority filters.</string>
+
+    <!-- Focus Timer Screen -->
+    <string name="focus_title">Focus Timer</string>
+    <string name="focus_start">START</string>
+    <string name="focus_pause">PAUSE</string>
+    <string name="focus_reset">Reset Timer</string>
+    <string name="focus_mins_today">%1$d mins</string>
+    <string name="focus_focused_today">Focused Today</string>
+    <string name="focus_sessions_today">%1$d sessions</string>
+    <string name="focus_completed_label">Completed</string>
+
+    <!-- Categories Screen -->
+    <string name="categories_title">Categories &amp; Projects</string>
+    <string name="category_no_categories_title">No Categories Yet</string>
+    <string name="category_no_categories_subtitle">Organize tasks by creating custom project categories with distinct colors.</string>
+    <string name="category_create_button">Create Category</string>
+    <string name="category_delete_title">Delete Category?</string>
+    <string name="category_delete_msg">Are you sure you want to delete \'%1$s\'? Associated tasks will be moved to Uncategorized.</string>
+    <string name="category_new_dialog_title">New Category</string>
+    <string name="category_name_label">Category Name</string>
+    <string name="category_pick_color">Pick Color Accent</string>
+
+    <!-- Trash & Archive Dialogs -->
+    <string name="trash_empty_button">Empty Trash</string>
+    <string name="trash_empty_confirm_title">Empty Trash?</string>
+    <string name="trash_empty_confirm_msg">Are you sure you want to permanently delete all tasks in Trash? This action cannot be undone.</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Settings &amp; Preferences</string>
+    <string name="settings_appearance_header">Appearance &amp; Theme</string>
+    <string name="settings_theme_mode">Theme Mode</string>
+    <string name="settings_accent_color">Accent Color</string>
+    <string name="settings_task_reminders">Task Reminders</string>
+    <string name="settings_task_reminders_desc">Receive local exact alarm notifications for scheduled tasks</string>
+    <string name="settings_notif_style">Notification Style</string>
+    <string name="notif_option_bar_title_short">Notification Bar</string>
+    <string name="notif_option_fullscreen_title_short">Full Screen Alert</string>
+    <string name="settings_categories_title">Categories &amp; Projects</string>
+    <string name="settings_categories_subtitle">Organize tasks with labels and colors</string>
+    <string name="settings_templates_title">Task Templates</string>
+    <string name="settings_templates_subtitle">Reusable checklists and routine structures</string>
+    <string name="settings_analytics_title">Productivity Analytics</string>
+    <string name="settings_analytics_subtitle">Streaks, focus metrics and completion charts</string>
+    <string name="settings_archived_title">Archived Tasks</string>
+    <string name="settings_archived_subtitle">View and restore completed or saved archives</string>
+    <string name="settings_trash_title">Trash Bin</string>
+    <string name="settings_trash_subtitle">Restore soft-deleted tasks or empty bin</string>
+    <string name="settings_about_title">About Planora</string>
+    <string name="settings_about_desc">Planora v1.0 • 100% Offline Task Management\nPrivacy-focused: all your personal tasks, streaks, and analytics stay strictly local on this device.</string>
+
+    <!-- Productivity Stats Screen -->
+    <string name="stats_analytics_title">Productivity Analytics</string>
+    <string name="stats_overall_completion">Overall Completion Rate</string>
+    <string name="stats_msg_outstanding">Outstanding consistency! 🚀</string>
+    <string name="stats_msg_good">Good progress, keep pushing! 💪</string>
+    <string name="stats_msg_stay_focused">Stay focused and finish tasks! 🎯</string>
+    <string name="stats_current_streak">Current Streak</string>
+    <string name="stats_best_record">Best Record</string>
+    <string name="stats_days_one">1 day</string>
+    <string name="stats_days_count">%1$d days</string>
+    <string name="stats_completed_today">Completed Today</string>
+    <string name="stats_this_week">This Week</string>
+    <string name="stats_focus_today">Focus Today</string>
+    <string name="stats_focus_week">Focus Week</string>
+    <string name="stats_category_distribution">Category Distribution</string>
+    <string name="stats_no_category_data">No category data available yet.</string>
+
+    <!-- Task Editor Screen -->
+    <string name="task_editor_create_title">Create Task</string>
+    <string name="task_editor_edit_title">Edit Task</string>
+    <string name="task_editor_save">Save</string>
+    <string name="task_editor_create">Create</string>
+    <string name="task_editor_title_hint">Task Title</string>
+    <string name="task_editor_desc_hint">Add description or details…</string>
+    <string name="task_editor_schedule">Schedule &amp; Timing</string>
+    <string name="task_editor_due_date">Due Date</string>
+    <string name="task_editor_due_time">Due Time</string>
+    <string name="task_editor_repeat">Repeat</string>
+    <string name="task_editor_organization">Organization</string>
+    <string name="task_editor_category">Category</string>
+    <string name="task_editor_select_category">Select Category</string>
+    <string name="task_editor_priority">Priority</string>
+    <string name="task_editor_pin_task">Pin Task to Top</string>
+    <string name="task_editor_notes_hint">Add extra notes, links or reference code…</string>
+    <string name="task_editor_none">None</string>
+    <string name="task_editor_uncategorized">Uncategorized</string>
+
+    <!-- Task Detail Screen -->
+    <string name="task_detail_title">Task Details</string>
+    <string name="task_detail_not_found_title">Task Not Found</string>
+    <string name="task_detail_not_found_subtitle">This task may have been deleted or moved to trash.</string>
+    <string name="task_detail_go_back">Go Back</string>
+    <string name="task_detail_description">Description</string>
+    <string name="task_detail_subtasks">Subtasks &amp; Checklist</string>
+    <string name="task_detail_subtasks_progress">%1$d of %2$d completed</string>
+    <string name="task_detail_notes">Notes</string>
+    <string name="task_detail_due">Due: %1$s</string>
+    <string name="task_detail_time">Time: %1$s</string>
+
+    <!-- Task View Screen -->
+    <string name="task_view_no_tasks_title">No tasks in %1$s</string>
+    <string name="task_view_no_tasks_subtitle">Tasks assigned to this list will show up here.</string>
+
+    <!-- Templates Screen -->
+    <string name="templates_title">Task Templates</string>
+    <string name="templates_no_templates_title">No Templates Available</string>
+    <string name="templates_no_templates_subtitle">Create reusable template structures for recurring task routines.</string>
+    <string name="templates_create_button">Create Template</string>
+    <string name="templates_use_button">Use Template</string>
+    <string name="templates_task_created_msg">Task \'%1$s\' created!</string>
+    <string name="templates_view_task">View Task</string>
+    <string name="templates_new_title">New Task Template</string>
+    <string name="templates_edit_title">Edit Task Template</string>
+    <string name="templates_name_label">Template Title</string>
+    <string name="templates_subtasks_header">Default Subtasks</string>
+    <string name="templates_add_subtask_hint">Add subtask and press enter…</string>
+    <string name="templates_relative_due">Relative Due Days</string>
+    <string name="templates_due_today">Due Today (0 days)</string>
+    <string name="templates_due_in_days">Due in %1$d days</string>
+    <string name="templates_delete_title">Delete Template?</string>
+    <string name="templates_delete_msg">Are you sure you want to delete template \'%1$s\'?</string>
+
+    <!-- Common Dialogs & Buttons -->
+    <string name="ok">OK</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="close">Close</string>
+    <string name="back">Back</string>
+
+    <!-- Notification Alert Screen -->
+    <string name="task_reminder_title">TASK REMINDER</string>
+    <string name="mark_complete">Mark Complete</string>
+    <string name="snooze_15m">Snooze 15m</string>
+    <string name="dismiss">Dismiss</string>
+
+    <!-- Quick Add Bar -->
+    <string name="quick_add_placeholder">Add task (e.g., \'Submit report tomorrow 5pm !high\')</string>
+</resources>

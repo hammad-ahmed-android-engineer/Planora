@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Glowing circular base backdrop -->
+    <path
+        android:pathData="M60,60m-52,0a52,52 0 1,1 104,0a52,52 0 1,1 -104,0">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="15"
+                android:startY="15"
+                android:endX="105"
+                android:endY="105"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#256366F1" />
+                <item android:offset="1.0" android:color="#101E1B4B" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Outer rim stroke -->
+    <path
+        android:pathData="M60,60m-50,0a50,50 0 1,1 100,0a50,50 0 1,1 -100,0"
+        android:strokeWidth="1.5">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:startX="10"
+                android:startY="10"
+                android:endX="110"
+                android:endY="110"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#60818CF8" />
+                <item android:offset="0.5" android:color="#206366F1" />
+                <item android:offset="1.0" android:color="#4010B981" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Drop shadow -->
+    <path
+        android:pathData="M40,41 C40,36 43,32 48,32 L68,32 C78,32 86,40 86,50 C86,59 79,66 70,68 L70,83 C70,86.5 67,89 63.5,89 C60,89 57,86.5 57,83 L57,71 L48,71 C43,71 40,67 40,63 Z"
+        android:fillColor="#33000000" />
+
+    <!-- Main Stylized 'P' Stem and Curve -->
+    <path
+        android:pathData="M41,40 C41,36 44,33 48,33 L67,33 C77,33 85,41 85,51 C85,61 77,69 67,69 L53,69 L53,83 C53,86.3 50.3,89 47,89 C43.7,89 41,86.3 41,83 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="41"
+                android:startY="33"
+                android:endX="85"
+                android:endY="89"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#A5B4FC" />
+                <item android:offset="0.3" android:color="#6366F1" />
+                <item android:offset="1.0" android:color="#4338CA" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Inner opening of 'P' -->
+    <path
+        android:pathData="M53,44 L66,44 C70,44 73,47 73,51 C73,55 70,58 66,58 L53,58 Z"
+        android:fillColor="#0D111E" />
+
+    <!-- Dynamic Checkmark -->
+    <path
+        android:pathData="M52,63 L63,74 L88,48"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:startX="52"
+                android:startY="74"
+                android:endX="88"
+                android:endY="48"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#10B981" />
+                <item android:offset="0.6" android:color="#14B8A6" />
+                <item android:offset="1.0" android:color="#06B6D4" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Luminous Check Highlight -->
+    <path
+        android:pathData="M61,72 L86,48"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeColor="#FFFFFF" />
+
+    <!-- Sparkle accent -->
+    <path
+        android:pathData="M90,32 C90,35 87,37 84,37 C87,37 90,39 90,42 C90,39 93,37 96,37 C93,37 90,35 90,32 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="84"
+                android:startY="32"
+                android:endX="96"
+                android:endY="42"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#FDE047" />
+                <item android:offset="1.0" android:color="#F59E0B" />
+            </gradient>
+        </aapt:attr>
+    </path>
+</vector>
