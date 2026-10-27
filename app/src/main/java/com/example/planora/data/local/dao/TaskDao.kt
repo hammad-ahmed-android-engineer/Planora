@@ -81,6 +81,22 @@ interface TaskDao {
     @Query("SELECT * FROM tasks WHERE isDeleted = 0 AND isArchived = 0 AND categoryId = :categoryId ORDER BY isCompleted ASC, priority DESC, dueDate ASC")
     fun getTasksByCategory(categoryId: String): Flow<List<TaskWithDetails>>
 
+    @Transaction
+    @Query("""
+        SELECT DISTINCT t.* FROM tasks t
+        LEFT JOIN subtasks s ON t.id = s.taskId
+        WHERE t.isDeleted = 0 AND t.isArchived = 0
+        AND (
+            :searchQuery = '' OR
+            LOWER(t.title) LIKE '%' || LOWER(:searchQuery) || '%' OR
+            LOWER(t.description) LIKE '%' || LOWER(:searchQuery) || '%' OR
+            LOWER(t.notes) LIKE '%' || LOWER(:searchQuery) || '%' OR
+            LOWER(s.title) LIKE '%' || LOWER(:searchQuery) || '%'
+        )
+        ORDER BY t.isPinned DESC, t.priority DESC, t.createdTimestamp DESC
+    """)
+    fun searchActiveTasksByQuery(searchQuery: String): Flow<List<TaskWithDetails>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: TaskEntity)
 

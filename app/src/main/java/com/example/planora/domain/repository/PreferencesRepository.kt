@@ -1,13 +1,13 @@
 package com.example.planora.domain.repository
 
-import com.example.planora.domain.model.UserSettings
+import com.example.planora.domain.model.UserPreferences
 import kotlinx.coroutines.flow.Flow
 
 /**
  * Domain repository interface for managing persistent user preferences and app configuration.
  */
 interface PreferencesRepository {
-    val userSettingsFlow: Flow<UserSettings>
+    val userPreferencesFlow: Flow<UserPreferences>
 
     suspend fun updateThemeMode(mode: String)
     suspend fun updateAccentColor(colorHex: String)

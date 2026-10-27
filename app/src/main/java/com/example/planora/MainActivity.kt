@@ -18,11 +18,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.planora.domain.model.UserSettings
-import com.example.planora.ui.MainViewModel
-import com.example.planora.ui.navigation.MainAppNavigation
-import com.example.planora.ui.screens.splash.SplashScreen
-import com.example.planora.ui.theme.PlanoraTheme
+import com.example.planora.core.designsystem.theme.PlanoraTheme
+import com.example.planora.domain.model.UserPreferences
+import com.example.planora.presentation.MainViewModel
+import com.example.planora.presentation.navigation.MainAppNavigation
+import com.example.planora.presentation.splash.SplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,13 +50,13 @@ class MainActivity : ComponentActivity() {
         checkAndRequestPermissions()
 
         setContent {
-            val userSettings by viewModel.userSettings.collectAsStateWithLifecycle(initialValue = UserSettings())
+            val userPreferences by viewModel.userPreferences.collectAsStateWithLifecycle(initialValue = UserPreferences())
             val navigateTaskId by viewModel.navigateTaskId.collectAsStateWithLifecycle()
             var showSplash by rememberSaveable { mutableStateOf(true) }
 
             PlanoraTheme(
-                themeMode = userSettings.themeMode,
-                accentColorHex = userSettings.accentColorHex
+                themeMode = userPreferences.themeMode,
+                accentColorHex = userPreferences.accentColorHex
             ) {
                 Crossfade(
                     targetState = showSplash,

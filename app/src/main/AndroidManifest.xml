@@ -22,7 +22,7 @@
         android:theme="@style/Theme.Planora">
 
         <activity
-            android:name=".notification.FullScreenAlertActivity"
+            android:name=".core.notification.FullScreenAlertActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:showWhenLocked="true"
@@ -47,7 +47,7 @@
         </activity>
 
         <receiver
-            android:name=".widget.PlanoraWidgetProvider"
+            android:name=".presentation.widget.PlanoraWidgetProvider"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -58,19 +58,19 @@
         </receiver>
 
         <receiver
-            android:name=".notification.TaskReminderReceiver"
+            android:name=".core.notification.TaskReminderReceiver"
             android:exported="false" />
 
         <receiver
-            android:name=".notification.TaskActionReceiver"
+            android:name=".core.notification.TaskActionReceiver"
             android:exported="false" />
 
         <receiver
-            android:name=".notification.StreakNotificationReceiver"
+            android:name=".core.notification.StreakNotificationReceiver"
             android:exported="false" />
 
         <receiver
-            android:name=".notification.BootReceiver"
+            android:name=".core.notification.BootReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

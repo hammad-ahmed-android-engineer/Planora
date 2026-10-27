@@ -1,8 +1,8 @@
 package com.example.planora.domain.usecase
 
+import com.example.planora.core.notification.AlarmScheduler
 import com.example.planora.domain.model.Task
 import com.example.planora.domain.repository.TaskRepository
-import com.example.planora.notification.AlarmScheduler
 import javax.inject.Inject
 
 /**

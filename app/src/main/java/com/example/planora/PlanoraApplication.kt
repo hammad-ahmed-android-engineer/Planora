@@ -1,7 +1,7 @@
 package com.example.planora
 
 import android.app.Application
-import com.example.planora.notification.StreakNotificationReceiver
+import com.example.planora.core.notification.StreakNotificationReceiver
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

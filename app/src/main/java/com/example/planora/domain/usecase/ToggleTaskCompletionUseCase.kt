@@ -1,9 +1,10 @@
 package com.example.planora.domain.usecase
 
+import com.example.planora.core.notification.AlarmScheduler
+import com.example.planora.core.utils.calculateNextDueDate
 import com.example.planora.domain.model.RecurrenceType
 import com.example.planora.domain.model.Task
 import com.example.planora.domain.repository.TaskRepository
-import com.example.planora.notification.AlarmScheduler
 import javax.inject.Inject
 
 /**
@@ -22,7 +23,7 @@ class ToggleTaskCompletionUseCase @Inject constructor(
      */
     suspend operator fun invoke(task: Task, isCompleted: Boolean) {
         if (isCompleted && task.recurrenceType != RecurrenceType.NONE) {
-            val nextDueDate = RecurrenceCalculator.calculateNextDueDate(task)
+            val nextDueDate = task.calculateNextDueDate()
             if (nextDueDate != null) {
                 // Update task for next recurrence cycle
                 val updatedTask = task.copy(

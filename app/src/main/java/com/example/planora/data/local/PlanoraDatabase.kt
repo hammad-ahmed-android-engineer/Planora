@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
         FocusSessionEntity::class,
     ],
     version = 2,
-    exportSchema = false
+    exportSchema = true
 )
 abstract class PlanoraDatabase : RoomDatabase() {
 
@@ -63,7 +63,6 @@ abstract class PlanoraDatabase : RoomDatabase() {
                 )
                     .addCallback(PlanoraDatabaseCallback())
                     .addMigrations(*ALL_MIGRATIONS)
-                    .fallbackToDestructiveMigration(dropAllTables = true)
                     .build()
                 INSTANCE = instance
                 instance

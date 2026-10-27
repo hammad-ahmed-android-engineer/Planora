@@ -1,5 +1,6 @@
 package com.example.planora.data.repository
 
+import com.example.planora.core.utils.calculateNextDueDate
 import com.example.planora.data.local.dao.TaskDao
 import com.example.planora.data.local.entity.TaskTagCrossRef
 import com.example.planora.data.mapper.toDomain
@@ -11,12 +12,10 @@ import com.example.planora.domain.model.TaskFilter
 import com.example.planora.domain.model.TaskSortOption
 import com.example.planora.domain.model.TaskViewType
 import com.example.planora.domain.repository.TaskRepository
-import com.example.planora.domain.usecase.RecurrenceCalculator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 import java.util.UUID
-
 import javax.inject.Inject
 
 class TaskRepositoryImpl @Inject constructor(
@@ -61,12 +60,18 @@ class TaskRepositoryImpl @Inject constructor(
         filter: TaskFilter?,
         sortOption: TaskSortOption
     ): Flow<List<Task>> {
-        return taskDao.getAllActiveTasksWithDetails().map { list ->
+        val trimmedQuery = query.trim()
+        val flow = if (trimmedQuery.isNotBlank()) {
+            taskDao.searchActiveTasksByQuery(trimmedQuery)
+        } else {
+            taskDao.getAllActiveTasksWithDetails()
+        }
+
+        return flow.map { list ->
             var domainList = list.map { it.toDomain() }.filter { !it.isDeleted && !it.isArchived }
 
-            // Query Search
-            if (query.isNotBlank()) {
-                val q = query.lowercase().trim()
+            if (trimmedQuery.isNotBlank()) {
+                val q = trimmedQuery.lowercase()
                 domainList = domainList.filter {
                     it.title.lowercase().contains(q) ||
                     it.description.lowercase().contains(q) ||
@@ -158,7 +163,7 @@ class TaskRepositoryImpl @Inject constructor(
 
         // Handle Recurrence if task is completed
         if (isCompleted && task.recurrenceType != RecurrenceType.NONE) {
-            val nextDueDate = RecurrenceCalculator.calculateNextDueDate(task)
+            val nextDueDate = task.calculateNextDueDate()
             if (nextDueDate != null) {
                 val nextOccurrence = task.copy(
                     id = UUID.randomUUID().toString(),

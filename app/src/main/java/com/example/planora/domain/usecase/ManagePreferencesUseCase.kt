@@ -1,6 +1,6 @@
 package com.example.planora.domain.usecase
 
-import com.example.planora.domain.model.UserSettings
+import com.example.planora.domain.model.UserPreferences
 import com.example.planora.domain.repository.PreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -11,7 +11,7 @@ import javax.inject.Inject
 class ManagePreferencesUseCase @Inject constructor(
     private val preferencesRepository: PreferencesRepository
 ) {
-    val userSettingsFlow: Flow<UserSettings> = preferencesRepository.userSettingsFlow
+    val userPreferencesFlow: Flow<UserPreferences> = preferencesRepository.userPreferencesFlow
 
     suspend fun updateNotificationStyle(style: String) {
         preferencesRepository.updateNotificationStyle(style)
