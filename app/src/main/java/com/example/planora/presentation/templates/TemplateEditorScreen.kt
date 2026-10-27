@@ -12,15 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,7 +27,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.planora.R
 import com.example.planora.core.designsystem.components.AppButton
 import com.example.planora.core.designsystem.components.AppOutlinedTextField
-import com.example.planora.core.designsystem.theme.AppTypography
+import com.example.planora.core.designsystem.components.AppTopAppBar
 import com.example.planora.core.designsystem.theme.dimensions
 import com.example.planora.core.utils.rememberDebouncedClick
 import com.example.planora.domain.model.Category
@@ -66,21 +61,10 @@ fun TemplateEditorScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    AppTypography.TitleLarge(
-                        text = if (uiState.isEdit) stringResource(R.string.templates_edit_title) else stringResource(R.string.templates_new_title)
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = debouncedBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.back),
-                            tint = primaryColor
-                        )
-                    }
-                },
+            AppTopAppBar(
+                title = if (uiState.isEdit) stringResource(R.string.templates_edit_title) else stringResource(R.string.templates_new_title),
+                onNavigateBack = debouncedBack,
+                navigationIconColor = primaryColor,
                 actions = {
                     AppButton(
                         text = stringResource(R.string.save),
@@ -89,10 +73,7 @@ fun TemplateEditorScreen(
                         enabled = uiState.title.isNotBlank(),
                         containerColor = primaryColor
                     )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                )
+                }
             )
         }
     ) { paddingValues ->

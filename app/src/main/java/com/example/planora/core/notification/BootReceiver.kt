@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.example.planora.data.local.PlanoraDatabase
-import com.example.planora.data.mapper.toDomain
+import com.example.planora.data.local.entity.toDomain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

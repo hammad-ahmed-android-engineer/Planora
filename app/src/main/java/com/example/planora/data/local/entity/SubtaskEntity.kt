@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.example.planora.domain.model.Subtask
 import java.util.UUID
 
 @Entity(
@@ -25,4 +26,20 @@ data class SubtaskEntity(
     val title: String,
     val isCompleted: Boolean = false,
     val sortOrder: Int = 0
+)
+
+fun SubtaskEntity.toDomain() = Subtask(
+    id = id,
+    taskId = taskId,
+    title = title,
+    isCompleted = isCompleted,
+    sortOrder = sortOrder
+)
+
+fun Subtask.toEntity(taskId: String) = SubtaskEntity(
+    id = id,
+    taskId = taskId,
+    title = title,
+    isCompleted = isCompleted,
+    sortOrder = sortOrder
 )

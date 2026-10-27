@@ -3,8 +3,8 @@ package com.example.planora.data.repository
 import com.example.planora.core.utils.calculateNextDueDate
 import com.example.planora.data.local.dao.TaskDao
 import com.example.planora.data.local.entity.TaskTagCrossRef
-import com.example.planora.data.mapper.toDomain
-import com.example.planora.data.mapper.toEntity
+import com.example.planora.data.local.entity.toDomain
+import com.example.planora.data.local.entity.toEntity
 import com.example.planora.domain.model.Priority
 import com.example.planora.domain.model.RecurrenceType
 import com.example.planora.domain.model.Task

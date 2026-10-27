@@ -18,20 +18,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Snooze
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -46,6 +39,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import com.example.planora.R
+import com.example.planora.core.designsystem.components.AppButton
+import com.example.planora.core.designsystem.components.AppCard
 import com.example.planora.core.designsystem.theme.AppTypography
 import com.example.planora.core.designsystem.theme.BackgroundDark
 import com.example.planora.core.designsystem.theme.EmeraldPrimary
@@ -182,13 +177,10 @@ fun FullScreenAlertContent(
 
             if (taskDesc.isNotBlank()) {
                 Spacer(modifier = Modifier.height(dims.spacing.medium))
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(dims.corners.large))
-                        .border(dims.borders.thin, Color.White.copy(alpha = 0.15f), RoundedCornerShape(dims.corners.large)),
-                    shape = RoundedCornerShape(dims.corners.large),
-                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.08f))
+                AppCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    containerColor = Color.White.copy(alpha = 0.08f),
+                    borderColor = Color.White.copy(alpha = 0.15f)
                 ) {
                     AppTypography.BodyMedium(
                         text = taskDesc,
@@ -203,25 +195,16 @@ fun FullScreenAlertContent(
 
             Spacer(modifier = Modifier.height(dims.spacing.extraLarge))
 
-            Button(
+            AppButton(
+                text = stringResource(R.string.mark_complete),
                 onClick = debouncedComplete,
-                shape = RoundedCornerShape(dims.corners.pill),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = EmeraldPrimary,
-                    contentColor = Color.White
-                ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(dims.components.buttonHeight)
-            ) {
-                Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null, modifier = Modifier.size(dims.icons.medium))
-                Spacer(modifier = Modifier.width(dims.spacing.small))
-                AppTypography.TitleMedium(
-                    text = stringResource(R.string.mark_complete),
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-            }
+                    .height(dims.components.buttonHeight),
+                containerColor = EmeraldPrimary,
+                contentColor = Color.White,
+                icon = Icons.Default.CheckCircle
+            )
 
             Spacer(modifier = Modifier.height(dims.spacing.medium))
 
@@ -229,37 +212,27 @@ fun FullScreenAlertContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(dims.spacing.medium)
             ) {
-                OutlinedButton(
+                AppButton(
+                    text = stringResource(R.string.snooze_15m),
                     onClick = debouncedSnooze,
-                    shape = RoundedCornerShape(dims.corners.large),
                     modifier = Modifier
                         .weight(1f)
-                        .height(dims.components.buttonHeight)
-                ) {
-                    Icon(imageVector = Icons.Default.Snooze, contentDescription = null, tint = Color.White, modifier = Modifier.size(dims.icons.small))
-                    Spacer(modifier = Modifier.width(dims.spacing.tiny))
-                    AppTypography.BodyMedium(
-                        text = stringResource(R.string.snooze_15m),
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.White
-                    )
-                }
+                        .height(dims.components.buttonHeight),
+                    containerColor = Color.White.copy(alpha = 0.12f),
+                    contentColor = Color.White,
+                    icon = Icons.Default.Snooze
+                )
 
-                OutlinedButton(
+                AppButton(
+                    text = stringResource(R.string.dismiss),
                     onClick = debouncedDismiss,
-                    shape = RoundedCornerShape(dims.corners.large),
                     modifier = Modifier
                         .weight(1f)
-                        .height(dims.components.buttonHeight)
-                ) {
-                    Icon(imageVector = Icons.Default.Close, contentDescription = null, tint = Color(0xFF94A3B8), modifier = Modifier.size(dims.icons.small))
-                    Spacer(modifier = Modifier.width(dims.spacing.tiny))
-                    AppTypography.BodyMedium(
-                        text = stringResource(R.string.dismiss),
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFF94A3B8)
-                    )
-                }
+                        .height(dims.components.buttonHeight),
+                    containerColor = Color.White.copy(alpha = 0.06f),
+                    contentColor = Color(0xFF94A3B8),
+                    icon = Icons.Default.Close
+                )
             }
         }
     }

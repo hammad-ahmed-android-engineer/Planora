@@ -1,6 +1,5 @@
 package com.example.planora.presentation.focus.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,19 +15,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.planora.R
+import com.example.planora.core.designsystem.components.AppButton
+import com.example.planora.core.designsystem.components.AppIconButton
 import com.example.planora.core.designsystem.theme.AppTypography
 import com.example.planora.core.designsystem.theme.IndigoPrimary
 import com.example.planora.core.designsystem.theme.dimensions
@@ -50,31 +47,24 @@ fun TimerControlButtons(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
-        IconButton(
+        AppIconButton(
             onClick = debouncedReset,
-            modifier = Modifier
-                .size(dims.components.fab)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
-                .border(dims.borders.thin, MaterialTheme.colorScheme.outline.copy(alpha = 0.3f), CircleShape)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Refresh,
-                contentDescription = stringResource(R.string.focus_reset),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.size(dims.icons.medium)
-            )
-        }
+            icon = Icons.Default.Refresh,
+            contentDescription = stringResource(R.string.focus_reset),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            buttonSize = dims.components.fab,
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+            iconSize = dims.icons.medium,
+            modifier = Modifier.border(dims.borders.thin, MaterialTheme.colorScheme.outline.copy(alpha = 0.3f), CircleShape)
+        )
 
         Spacer(modifier = Modifier.width(dims.spacing.default))
 
-        Button(
+        AppButton(
             onClick = debouncedPlayPause,
             shape = RoundedCornerShape(dims.corners.extraLarge),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = if (isRunning) Color(0xFFEF4444) else IndigoPrimary,
-                contentColor = Color.White
-            ),
+            containerColor = if (isRunning) Color(0xFFEF4444) else IndigoPrimary,
+            contentColor = Color.White,
             contentPadding = PaddingValues(horizontal = dims.spacing.default, vertical = dims.spacing.small),
             modifier = Modifier
                 .height(dims.components.buttonHeight)

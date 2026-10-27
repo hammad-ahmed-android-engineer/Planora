@@ -2,8 +2,8 @@ package com.example.planora.data.repository
 
 import com.example.planora.data.local.dao.TaskTemplateDao
 import com.example.planora.data.local.entity.TaskTemplateEntity
-import com.example.planora.data.mapper.toDomain
-import com.example.planora.data.mapper.toEntity
+import com.example.planora.data.local.entity.toDomain
+import com.example.planora.data.local.entity.toEntity
 import com.example.planora.domain.model.TaskTemplate
 import com.example.planora.domain.repository.TaskTemplateRepository
 import kotlinx.coroutines.flow.Flow

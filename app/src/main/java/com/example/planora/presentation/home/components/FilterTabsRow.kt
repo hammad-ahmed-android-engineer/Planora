@@ -93,7 +93,7 @@ fun FilterTabsRow(
                         Box(
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .background(if (isSelected) Color.White.copy(alpha = 0.25f) else MaterialTheme.colorScheme.surface)
+                                .background(if (isSelected) Color.White else MaterialTheme.colorScheme.surfaceVariant)
                                 .padding(horizontal = dims.spacing.small, vertical = dims.spacing.micro)
                         ) {
                             AppTypography.Caption(

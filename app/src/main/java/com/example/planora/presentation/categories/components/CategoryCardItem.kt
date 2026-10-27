@@ -14,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.planora.R
 import com.example.planora.core.designsystem.components.AppCard
+import com.example.planora.core.designsystem.components.AppIconButton
 import com.example.planora.core.designsystem.theme.AppTypography
 import com.example.planora.core.designsystem.theme.dimensions
 import com.example.planora.core.utils.parseHexColor
@@ -76,14 +76,13 @@ fun CategoryCardItem(
                     )
                 }
             }
-            IconButton(onClick = debouncedDelete) {
-                Icon(
-                    imageVector = Icons.Default.DeleteOutline,
-                    contentDescription = stringResource(R.string.delete),
-                    tint = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
-                    modifier = Modifier.size(dims.icons.medium)
-                )
-            }
+            AppIconButton(
+                onClick = debouncedDelete,
+                icon = Icons.Default.DeleteOutline,
+                contentDescription = stringResource(R.string.delete),
+                tint = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
+                iconSize = dims.icons.medium
+            )
         }
     }
 }

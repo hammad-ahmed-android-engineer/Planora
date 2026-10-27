@@ -1,7 +1,6 @@
 package com.example.planora.presentation.templates.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,14 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +23,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.planora.R
+import com.example.planora.core.designsystem.components.AppCard
+import com.example.planora.core.designsystem.components.AppIconButton
 import com.example.planora.core.designsystem.components.AppOutlinedTextField
 import com.example.planora.core.designsystem.theme.AppTypography
 import com.example.planora.core.designsystem.theme.dimensions
@@ -44,17 +41,12 @@ fun TemplateSubtasksSection(
 ) {
     val dims = dimensions
     val primaryColor = MaterialTheme.colorScheme.primary
-    val shape = RoundedCornerShape(dims.corners.extraLarge)
     val debouncedAdd = rememberDebouncedClick(onClick = onAddSubtask)
 
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(shape)
-            .border(dims.borders.thin, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f), shape),
-        shape = shape,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = dims.elevations.low)
+    AppCard(
+        modifier = modifier.fillMaxWidth(),
+        containerColor = MaterialTheme.colorScheme.surface,
+        borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)
     ) {
         Column(modifier = Modifier.padding(dims.spacing.default)) {
             AppTypography.TitleMedium(
@@ -77,17 +69,13 @@ fun TemplateSubtasksSection(
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(dims.spacing.small))
-                IconButton(
+                AppIconButton(
                     onClick = debouncedAdd,
-                    enabled = newSubtaskText.isNotBlank()
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(R.string.confirm),
-                        tint = if (newSubtaskText.isNotBlank()) primaryColor else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f),
-                        modifier = Modifier.size(dims.icons.medium)
-                    )
-                }
+                    enabled = newSubtaskText.isNotBlank(),
+                    icon = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.confirm),
+                    tint = if (newSubtaskText.isNotBlank()) primaryColor else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
+                )
             }
 
             if (subtasks.isNotEmpty()) {
@@ -112,14 +100,12 @@ fun TemplateSubtasksSection(
                             text = subtask,
                             modifier = Modifier.weight(1f)
                         )
-                        IconButton(onClick = debouncedDelete) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = stringResource(R.string.delete),
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
-                                modifier = Modifier.size(dims.icons.small)
-                            )
-                        }
+                        AppIconButton(
+                            onClick = debouncedDelete,
+                            icon = Icons.Default.Close,
+                            contentDescription = stringResource(R.string.delete),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                        )
                     }
                 }
             }

@@ -5,12 +5,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.planora.R
+import com.example.planora.core.designsystem.components.AppIconButton
 import com.example.planora.core.designsystem.components.AppOutlinedTextField
 import com.example.planora.core.utils.rememberDebouncedClick
 
@@ -36,13 +36,12 @@ fun SearchInputField(
         },
         trailingIcon = {
             if (query.isNotEmpty()) {
-                IconButton(onClick = debouncedClear) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.search_clear),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
+                AppIconButton(
+                    onClick = debouncedClear,
+                    icon = Icons.Default.Clear,
+                    contentDescription = stringResource(R.string.search_clear),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         },
         singleLine = true,

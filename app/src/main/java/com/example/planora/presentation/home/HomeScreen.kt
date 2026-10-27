@@ -165,7 +165,7 @@ fun HomeScreen(
                     todayTasks = uiState.todayTasks,
                     activeCount = uiState.activeCount,
                     completedCount = uiState.completedCount,
-                    modifier = Modifier.padding(horizontal = dims.spacing.default, vertical = dims.spacing.micro)
+                    modifier = Modifier.padding(horizontal = dims.spacing.small, vertical = dims.spacing.micro)
                 )
 
                 Spacer(modifier = Modifier.height(dims.spacing.small))

@@ -10,16 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import com.example.planora.R
-import com.example.planora.core.designsystem.theme.AppTypography
+import com.example.planora.core.designsystem.components.AppTopAppBar
 import com.example.planora.core.designsystem.theme.dimensions
 import com.example.planora.domain.model.UserPreferences
 import com.example.planora.presentation.settings.components.AboutPlanoraCard
@@ -47,13 +44,8 @@ fun SettingsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    AppTypography.TitleLarge(text = stringResource(R.string.settings_title))
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                )
+            AppTopAppBar(
+                title = stringResource(R.string.settings_title)
             )
         }
     ) { paddingValues ->

@@ -1,6 +1,5 @@
 package com.example.planora.presentation.templates.components
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,11 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Folder
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -25,10 +21,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.planora.R
+import com.example.planora.core.designsystem.components.AppCard
 import com.example.planora.core.designsystem.components.AppFilterChip
 import com.example.planora.core.designsystem.theme.AppTypography
 import com.example.planora.core.designsystem.theme.dimensions
@@ -53,16 +49,11 @@ fun TemplateOrganizationCard(
 ) {
     val dims = dimensions
     val primaryColor = MaterialTheme.colorScheme.primary
-    val shape = RoundedCornerShape(dims.corners.extraLarge)
 
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(shape)
-            .border(dims.borders.thin, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f), shape),
-        shape = shape,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = dims.elevations.low)
+    AppCard(
+        modifier = modifier.fillMaxWidth(),
+        containerColor = MaterialTheme.colorScheme.surface,
+        borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)
     ) {
         Column(modifier = Modifier.padding(dims.spacing.default)) {
             AppTypography.TitleMedium(
@@ -80,14 +71,12 @@ fun TemplateOrganizationCard(
                 val selectedCategoryName = categoriesList.find { it.id == selectedCategoryId }?.name ?: stringResource(R.string.filter_all_tasks)
 
                 Box(modifier = Modifier.weight(1f)) {
-                    Card(
+                    AppCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(RoundedCornerShape(dims.corners.medium))
-                            .border(dims.borders.thin, MaterialTheme.colorScheme.outline.copy(alpha = 0.3f), RoundedCornerShape(dims.corners.medium))
                             .clickableDebounced { onToggleCategoryMenu(true) },
-                        shape = RoundedCornerShape(dims.corners.medium),
-                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                        borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,

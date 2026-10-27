@@ -1,7 +1,6 @@
 package com.example.planora.presentation.templates.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -20,12 +19,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,15 +29,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.planora.R
-import com.example.planora.domain.model.Category
-import com.example.planora.domain.model.Priority
-import com.example.planora.domain.model.TaskTemplate
-import com.example.planora.core.designsystem.theme.AppTypography
+import com.example.planora.core.designsystem.components.AppButton
+import com.example.planora.core.designsystem.components.AppCard
+import com.example.planora.core.designsystem.components.AppIconButton
 import com.example.planora.core.designsystem.components.CategoryChip
 import com.example.planora.core.designsystem.components.PriorityBadge
+import com.example.planora.core.designsystem.theme.AppTypography
 import com.example.planora.core.designsystem.theme.IndigoPrimary
 import com.example.planora.core.designsystem.theme.dimensions
 import com.example.planora.core.utils.rememberDebouncedClick
+import com.example.planora.domain.model.Category
+import com.example.planora.domain.model.Priority
+import com.example.planora.domain.model.TaskTemplate
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -56,20 +53,16 @@ fun TemplateCardItem(
     modifier: Modifier = Modifier
 ) {
     val dims = dimensions
-    val shape = RoundedCornerShape(dims.corners.extraLarge)
     val debouncedEdit = rememberDebouncedClick { onEditTemplate(template) }
     val debouncedDelete = rememberDebouncedClick { onDeleteTemplate(template) }
     val debouncedUse = rememberDebouncedClick { onUseTemplate(template) }
 
-    Card(
+    AppCard(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = dims.spacing.tiny)
-            .clip(shape)
-            .border(dims.borders.thin, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f), shape),
-        shape = shape,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = dims.elevations.low)
+            .padding(vertical = dims.spacing.tiny),
+        containerColor = MaterialTheme.colorScheme.surface,
+        borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)
     ) {
         Column(modifier = Modifier.padding(dims.spacing.default)) {
             Row(
@@ -93,29 +86,21 @@ fun TemplateCardItem(
                 }
 
                 Row(horizontalArrangement = Arrangement.End) {
-                    IconButton(
+                    AppIconButton(
                         onClick = debouncedEdit,
-                        modifier = Modifier.size(dims.components.buttonSmallHeight)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = stringResource(R.string.action_edit),
-                            tint = IndigoPrimary,
-                            modifier = Modifier.size(dims.icons.small)
-                        )
-                    }
+                        icon = Icons.Default.Edit,
+                        contentDescription = stringResource(R.string.action_edit),
+                        tint = IndigoPrimary,
+                        buttonSize = dims.components.buttonSmallHeight
+                    )
 
-                    IconButton(
+                    AppIconButton(
                         onClick = debouncedDelete,
-                        modifier = Modifier.size(dims.components.buttonSmallHeight)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = stringResource(R.string.action_delete),
-                            tint = MaterialTheme.colorScheme.error,
-                            modifier = Modifier.size(dims.icons.small)
-                        )
-                    }
+                        icon = Icons.Default.Delete,
+                        contentDescription = stringResource(R.string.action_delete),
+                        tint = MaterialTheme.colorScheme.error,
+                        buttonSize = dims.components.buttonSmallHeight
+                    )
                 }
             }
 
@@ -167,14 +152,12 @@ fun TemplateCardItem(
 
                 Spacer(modifier = Modifier.width(dims.spacing.small))
 
-                Button(
+                AppButton(
                     onClick = debouncedUse,
                     shape = RoundedCornerShape(dims.corners.medium),
                     contentPadding = PaddingValues(horizontal = dims.spacing.medium, vertical = dims.spacing.tiny),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = IndigoPrimary,
-                        contentColor = Color.White
-                    )
+                    containerColor = IndigoPrimary,
+                    contentColor = Color.White
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,

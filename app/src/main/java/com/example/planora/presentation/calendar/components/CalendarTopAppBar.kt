@@ -7,17 +7,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Today
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.planora.R
+import com.example.planora.core.designsystem.components.AppButton
+import com.example.planora.core.designsystem.components.AppTopAppBar
 import com.example.planora.core.designsystem.theme.AppTypography
 import com.example.planora.core.designsystem.theme.IndigoPrimary
 import com.example.planora.core.designsystem.theme.LocalDimensions
@@ -32,24 +30,21 @@ fun CalendarTopAppBar(
     val dims = LocalDimensions.current
     val debouncedToday = rememberDebouncedClick(onClick = onGoToToday)
 
-    TopAppBar(
-        title = {
-            AppTypography.TitleLarge(text = stringResource(R.string.calendar_title))
-        },
+    AppTopAppBar(
+        title = stringResource(R.string.calendar_title),
         actions = {
-            FilledTonalButton(
+            AppButton(
                 onClick = debouncedToday,
                 shape = RoundedCornerShape(dims.corners.small),
-                colors = ButtonDefaults.filledTonalButtonColors(
-                    containerColor = IndigoPrimary.copy(alpha = 0.14f),
-                    contentColor = IndigoPrimary
-                ),
+                containerColor = IndigoPrimary.copy(alpha = 0.14f),
+                contentColor = IndigoPrimary,
                 modifier = Modifier.padding(end = dims.spacing.small)
             ) {
                 Icon(
                     imageVector = Icons.Default.Today,
                     contentDescription = null,
-                    modifier = Modifier.size(dims.icons.small)
+                    modifier = Modifier.size(dims.icons.small),
+                    tint = IndigoPrimary
                 )
                 Spacer(modifier = Modifier.width(dims.spacing.tiny))
                 AppTypography.SubText(
@@ -58,9 +53,6 @@ fun CalendarTopAppBar(
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background
-        ),
         modifier = modifier
     )
 }

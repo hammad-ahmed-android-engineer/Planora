@@ -3,7 +3,6 @@ package com.example.planora.presentation.calendar.components
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,10 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,6 +30,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import com.example.planora.R
+import com.example.planora.core.designsystem.components.AppCard
+import com.example.planora.core.designsystem.components.AppIconButton
 import com.example.planora.core.designsystem.theme.AppTypography
 import com.example.planora.core.designsystem.theme.IndigoPrimary
 import com.example.planora.core.designsystem.theme.LocalDimensions
@@ -56,16 +53,11 @@ fun CalendarMonthCard(
     modifier: Modifier = Modifier
 ) {
     val dims = LocalDimensions.current
-    val shape = RoundedCornerShape(dims.corners.extraLarge)
 
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(shape)
-            .border(dims.borders.thin, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f), shape),
-        shape = shape,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = dims.elevations.low)
+    AppCard(
+        modifier = modifier.fillMaxWidth(),
+        containerColor = MaterialTheme.colorScheme.surface,
+        borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)
     ) {
         Column(modifier = Modifier.padding(dims.spacing.medium)) {
             Row(
@@ -76,13 +68,12 @@ fun CalendarMonthCard(
                 val debouncedPrev = rememberDebouncedClick(onClick = onPrevMonth)
                 val debouncedNext = rememberDebouncedClick(onClick = onNextMonth)
 
-                IconButton(onClick = debouncedPrev) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.calendar_prev_month),
-                        tint = MaterialTheme.colorScheme.onSurface
-                    )
-                }
+                AppIconButton(
+                    onClick = debouncedPrev,
+                    icon = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(R.string.calendar_prev_month),
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
 
                 AppTypography.TitleMedium(
                     text = currentMonth.format(DateTimeFormatter.ofPattern("MMMM yyyy")),
@@ -90,13 +81,12 @@ fun CalendarMonthCard(
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
-                IconButton(onClick = debouncedNext) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                        contentDescription = stringResource(R.string.calendar_next_month),
-                        tint = MaterialTheme.colorScheme.onSurface
-                    )
-                }
+                AppIconButton(
+                    onClick = debouncedNext,
+                    icon = Icons.AutoMirrored.Filled.ArrowForward,
+                    contentDescription = stringResource(R.string.calendar_next_month),
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
             }
 
             Spacer(modifier = Modifier.height(dims.spacing.small))

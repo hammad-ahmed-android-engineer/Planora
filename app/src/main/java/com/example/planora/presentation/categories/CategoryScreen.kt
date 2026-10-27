@@ -21,12 +21,12 @@ import androidx.compose.ui.res.stringResource
 import com.example.planora.R
 import com.example.planora.core.designsystem.components.AppFloatingActionButton
 import com.example.planora.core.designsystem.components.AppTopAppBar
+import com.example.planora.core.designsystem.components.ConfirmationDialog
 import com.example.planora.core.designsystem.theme.IndigoPrimary
 import com.example.planora.core.designsystem.theme.dimensions
 import com.example.planora.core.utils.rememberDebouncedClick
 import com.example.planora.domain.model.Category
 import com.example.planora.presentation.categories.components.AddCategoryDialog
-import com.example.planora.presentation.categories.components.CategoryDeleteDialog
 import com.example.planora.presentation.categories.components.CategoryListContent
 
 @Composable
@@ -91,13 +91,21 @@ fun CategoryScreen(
         }
 
         categoryToDelete?.let { cat ->
-            CategoryDeleteDialog(
-                category = cat,
-                onDismiss = { categoryToDeleteId = null },
-                onConfirm = {
-                    onDeleteCategory(cat, null)
-                    categoryToDeleteId = null
-                }
+            val debouncedConfirm = rememberDebouncedClick {
+                onDeleteCategory(cat, null)
+                categoryToDeleteId = null
+            }
+            val debouncedDismiss = rememberDebouncedClick {
+                categoryToDeleteId = null
+            }
+            ConfirmationDialog(
+                title = stringResource(R.string.category_delete_title),
+                message = stringResource(R.string.category_delete_msg, cat.name),
+                onConfirm = debouncedConfirm,
+                onDismiss = debouncedDismiss,
+                confirmText = stringResource(R.string.delete),
+                dismissText = stringResource(R.string.cancel),
+                isDestructive = true
             )
         }
     }

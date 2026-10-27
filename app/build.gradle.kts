@@ -15,8 +15,6 @@ android {
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -65,9 +63,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-    // DataStore & WorkManager & Gson
+    // DataStore & Gson
     implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.gson)
 
     // SDP & SSP Scalable Dimensions
@@ -77,13 +74,6 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
 
-    // Testing
-    testImplementation(libs.junit)
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.mockk)
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    // Compose Tooling (for Previews)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

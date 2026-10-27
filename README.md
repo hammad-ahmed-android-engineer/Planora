@@ -16,7 +16,7 @@
 Planora operates on three core principles:
 1. **100% Offline & Privacy-First**: All personal data, checklists, statistics, and focus logs stay strictly on your local device. Zero tracking, zero telemetry, zero cloud dependencies.
 2. **Seamless Productivity Flow**: From smart quick-add task entry to custom Pomodoro timers and interactive calendar agendas, every workflow is designed for frictionless interaction.
-3. **Engineering Excellence**: Built with strict Clean Architecture, state hoisting, responsive dual-orientation layouts, and an explicit **1:1 file-to-composable decomposition** across every UI screen and component.
+3. **Engineering Excellence**: Built with strict Clean Architecture, state hoisting, responsive dual-orientation layouts, design system consistency, and an explicit **1:1 file-to-composable decomposition** across every UI screen and component.
 
 ---
 
@@ -25,11 +25,11 @@ Planora operates on three core principles:
 ### 📋 1. Comprehensive Task & Checklist Management
 - Create tasks with rich descriptions, due dates, due times, recurrence rules, priority levels, and category assignments.
 - **Priority Classification**: `Urgent`, `High`, `Medium`, `Low`, and `None` with distinct color accents.
-- **Interactive Subtasks**: Visual checklist progress tracking with completion percentages and one-tap toggling.
+- **Interactive Subtasks**: Visual checklist progress tracking with completion percentages and one-tap toggling via [`SubtaskChecklistEditor`](file:///D:/Programming/Android/GitHub/Planora/app/src/main/java/com/example/planora/core/designsystem/components/SubtaskChecklistEditor.kt) and [`AnimatedTaskCheckbox`](file:///D:/Programming/Android/GitHub/Planora/app/src/main/java/com/example/planora/core/designsystem/components/AnimatedTaskCheckbox.kt).
 - **Task Organization**: Dedicated views for `Today`, `Pinned`, `Overdue`, `All Tasks`, `Favorites`, `Categories`, `Archive`, and `Trash Bin` (with restore & empty bin support).
 
 ### ⚡ 2. Smart Quick Add & Auto-Detection
-- Instant task input bar supporting shorthand commands and auto-detected attributes:
+- Instant task input bar supporting shorthand commands and auto-extracted attributes:
   - **Priorities**: `!urgent`, `!high`, `!medium`, `!low`
   - **Tags**: `#Work`, `#Personal`, `#Health`
   - **Due Dates**: `today`, `tomorrow`, `next monday`, `tonight`
@@ -68,10 +68,11 @@ Planora operates on three core principles:
 - **Android 14+ Ready**: Built-in verification and direct shortcut to grant `USE_FULL_SCREEN_INTENT` Special App Access.
 - **Device Reboot Resilience**: `BootReceiver` automatically reschedules all active alarms upon reboot or timezone updates.
 
-### 🎨 9. Material 3 Personalization
+### 🎨 9. Material 3 Personalization & Design System
 - Dynamic **Light Mode**, **Dark Mode**, and **System Default** themes.
 - Selectable accent colors (Indigo, Emerald, Violet, Amber, Rose, Cyan).
 - Responsive portrait and landscape layouts with dedicated split-pane configurations.
+- Unified design system components (`AppCard`, `AppButton`, `AppOutlinedTextField`, `AppTopAppBar`, `AppFloatingActionButton`, `AppDialog`, `ConfirmationDialog`, `AppIconButton`, `AppSwitch`, `AppFilterChip`, `AppTextButton`, `AppLinearProgressIndicator`, `EmptyStateView`, `PriorityBadge`, `CategoryChip`, etc.).
 
 ### 📱 10. Home Screen Widget
 - Glanceable task widget (`PlanoraWidgetProvider`) providing direct overview of pending tasks from the Android launcher.
@@ -84,22 +85,34 @@ Planora follows modern Android architectural standards and **Clean Architecture*
 
 ```
 com.example.planora/
+├── MainActivity.kt                    # Root Activity (@AndroidEntryPoint, edge-to-edge, notifications)
+├── PlanoraApplication.kt              # Application entry point (@HiltAndroidApp)
+│
+├── core/                              # CORE MODULE (Design System, Notifications, Utils)
+│   ├── designsystem/                  # Design tokens, themes, & shared UI components
+│   │   ├── components/                # Reusable atoms (AppButton, AppCard, TaskItemCard, AppDialog, etc.)
+│   │   └── theme/                     # PlanoraTheme, Color, AppTypography, AppDimensions
+│   ├── notification/                  # Alarms, Receivers, & Full-screen alert activities
+│   │   └── components/                # FullScreenAlertContent
+│   └── utils/                         # Categorized Kotlin extensions (DateTime, Color, String, TaskParsing, Ui)
+│
 ├── data/                              # DATA LAYER
-│   ├── local/                         # Room Database, DAOs, Entities
-│   │   ├── dao/                       # TaskDao, CategoryDao, TagDao, TaskTemplateDao
-│   │   └── entity/                    # TaskEntity, CategoryEntity, TagEntity, etc.
-│   ├── mapper/                        # Entity <-> Domain Model bidirectional mappers
-│   ├── preferences/                   # Jetpack DataStore & direct SharedPreferences
-│   └── repository/                    # Repository implementations
+│   ├── datastore/                     # Jetpack DataStore preferences implementation
+│   ├── local/                         # Room Database, DAOs, and Entities
+│   │   ├── dao/                       # TaskDao, CategoryDao, TagDao, ReminderDao, TaskTemplateDao, FocusSessionDao
+│   │   └── entity/                    # TaskEntity, SubtaskEntity, CategoryEntity, TagEntity, etc. (with inline extension mappers)
+│   └── repository/                    # Repository implementations (Task, Category, Focus, Backup, Tag, Template, Preferences)
 │
-├── di/                                # DEPENDENCY INJECTION (Hilt)
-│   ├── DatabaseModule.kt              # Room DB, DAOs, and CoroutineDispatchers providers
-│   └── RepositoryModule.kt            # Clean @Binds interface-to-implementation bindings
+├── di/                                # DEPENDENCY INJECTION (Hilt Modules)
+│   ├── DataStoreModule.kt             # DataStore providers
+│   ├── DatabaseModule.kt              # Room DB, DAOs, and Dispatchers providers
+│   └── RepositoryModule.kt            # Clean interface-to-implementation @Binds bindings
 │
-├── domain/                            # DOMAIN LAYER (Pure Kotlin)
-│   ├── model/                         # Domain models (Task, Category, Priority, RecurrenceType, etc.)
+├── domain/                            # DOMAIN LAYER (Pure Kotlin Business Logic)
+│   ├── model/                         # Domain models (Task, Category, Tag, Subtask, Priority, FocusSession, etc.)
 │   ├── repository/                    # Clean Repository interfaces
-│   └── usecase/                       # Single-responsibility use cases
+│   └── usecase/                       # Single-responsibility business use cases
+│       ├── BackupRestoreUseCases.kt
 │       ├── CalculateProductivityStatsUseCase.kt
 │       ├── DeleteTaskUseCase.kt
 │       ├── GetTasksUseCase.kt
@@ -109,45 +122,25 @@ com.example.planora/
 │       ├── ManageTagsUseCase.kt
 │       ├── ManageTemplatesUseCase.kt
 │       ├── NaturalLanguageTaskParser.kt
-│       ├── RecurrenceCalculator.kt
 │       ├── SaveTaskUseCase.kt
 │       └── ToggleTaskCompletionUseCase.kt
 │
-├── notification/                      # ALARMS & NOTIFICATIONS
-│   ├── AlarmScheduler.kt              # Exact AlarmManager scheduler
-│   ├── FullScreenAlertActivity.kt     # Lockscreen alert host activity
-│   ├── components/                    # FullScreenAlertContent composable
-│   ├── TaskReminderReceiver.kt        # Alarm broadcast handler
-│   ├── TaskActionReceiver.kt          # Inline notification action receiver
-│   ├── StreakNotificationReceiver.kt  # Daily streak reminder receiver
-│   └── BootReceiver.kt                # Reboot & timezone recovery receiver
-│
-├── ui/                                # PRESENTATION LAYER (Jetpack Compose)
-│   ├── components/                    # Shared design system components (AppTypography, TaskItemCard, etc.)
-│   ├── navigation/                    # NavGraph, NavHostContainer, Screen destinations
-│   ├── screens/                       # 11 Modular Screen Packages
-│   │   ├── calendar/                  # CalendarRoute, CalendarScreen, components/
-│   │   ├── categories/                # CategoryRoute, CategoryScreen, components/
-│   │   ├── focus/                     # FocusTimerRoute, FocusTimerScreen, components/
-│   │   ├── home/                      # HomeRoute, HomeScreen, components/
-│   │   ├── search/                    # SearchFilterRoute, SearchFilterScreen, components/
-│   │   ├── settings/                  # SettingsRoute, SettingsScreen, components/
-│   │   ├── splash/                    # SplashScreen, components/
-│   │   ├── stats/                     # StatsRoute, StatsScreen, components/
-│   │   ├── taskdetail/                # TaskDetailRoute, TaskDetailScreen, components/
-│   │   ├── taskeditor/                # TaskEditorRoute, TaskEditorScreen, components/
-│   │   ├── taskview/                  # TaskViewRoute, TaskViewScreen, components/
-│   │   └── templates/                 # TemplatesRoute, TemplatesScreen, components/
-│   └── theme/                         # Theme, Color, Dimensions, Typography
-│
-├── util/                              # CATEGORIZED KOTLIN EXTENSIONS
-│   ├── DateTimeExtensions.kt          # Date/time formatting, ISO conversion, greeting
-│   ├── ColorExtensions.kt             # Color hex parsing, fallback, priority color
-│   ├── StringExtensions.kt            # Title validation, recurrence labels
-│   └── UiExtensions.kt                # Debounced clicks, fullscreen permissions
-│
-└── widget/                            # APP WIDGET
-    └── PlanoraWidgetProvider.kt       # AppWidgetProvider implementation
+└── presentation/                      # PRESENTATION LAYER (Jetpack Compose UDF)
+    ├── MainViewModel.kt               # Root host ViewModel
+    ├── calendar/                      # CalendarRoute, CalendarScreen, ViewModel, components/
+    ├── categories/                    # CategoryRoute, CategoryScreen, ViewModel, components/
+    ├── focus/                         # FocusTimerRoute, FocusTimerScreen, ViewModel, components/
+    ├── home/                          # HomeRoute, HomeScreen, ViewModel, components/
+    ├── navigation/                    # MainAppNavigation, NavGraph, NavHostContainer, Screen destinations
+    ├── search/                        # SearchFilterRoute, SearchFilterScreen, ViewModel, components/
+    ├── settings/                      # SettingsRoute, SettingsScreen, ViewModel, components/
+    ├── splash/                        # SplashScreen, components/
+    ├── stats/                         # StatsRoute, StatsScreen, ViewModel, components/
+    ├── taskdetail/                    # TaskDetailRoute, TaskDetailScreen, ViewModel, components/
+    ├── taskeditor/                    # TaskEditorRoute, TaskEditorScreen, ViewModel, components/
+    ├── taskview/                      # TaskViewRoute, TaskViewScreen, ViewModel, components/
+    ├── templates/                     # TemplateEditorRoute, TemplatesRoute, TemplatesScreen, ViewModel, components/
+    └── widget/                        # PlanoraWidgetProvider (AppWidget)
 ```
 
 ### Key Engineering Practices:
@@ -155,7 +148,9 @@ com.example.planora/
 - **Route vs. Screen Pattern**: Each screen is segregated into a stateful `*Route` (handles ViewModel injection via Hilt and event dispatching) and a stateless `*Screen` (pure UI receiving state and lambda callbacks).
 - **Unidirectional Data Flow (UDF)**: ViewModels expose immutable `StateFlow<UiState>` collected with `collectAsStateWithLifecycle()`.
 - **Debounced Interactions**: User actions use a 500ms debounce guard (`clickableDebounced` / `rememberDebouncedClick`) to prevent duplicate triggers.
-- **Clean Extension Architecture**: All utilities in `util/` are organized into 4 domain-focused extension files without arbitrary `object` singleton classes.
+- **Clean Extension Architecture**: All utilities in `core/utils/` are organized into domain-focused extension files without arbitrary `object` singleton classes.
+- **Database Safety & Migration Resilience**: Room schema export is enabled (`exportSchema = true`) with version JSON schemas tracked in `app/schemas`. Destructive table-drop migrations are disabled to ensure zero data loss during version upgrades, accompanied by native SQLite-level search query optimizations in Room DAOs.
+- **Decentralized Data Mappers**: Entity-to-domain mapping functions (`toDomain()`, `toEntity()`) reside directly as extension functions inside their respective entity files (`data/local/entity/*`), keeping the domain model pure and eliminating redundant mapper classes.
 
 ---
 
@@ -176,12 +171,8 @@ All dependencies are centrally managed via Gradle Version Catalog ([`libs.versio
 | **Navigation** | [Navigation Compose](https://developer.android.com/guide/navigation) | `2.10.2` | Single-activity Compose navigation |
 | **Local Database** | [Room Database (Runtime + KTX)](https://developer.android.com/training/data-storage/room) | `2.8.5` | SQLite object mapping with Flow support |
 | **Preferences** | [Jetpack DataStore Preferences](https://developer.android.com/topic/libraries/architecture/datastore) | `1.3.0` | Asynchronous key-value storage |
-| **Lifecycle** | Lifecycle Runtime Compose & ViewModel | `2.11.0` | Lifecycle-aware UI state management |
-| **Concurrency** | Kotlin Coroutines Android | `1.11.0` | Asynchronous background execution |
-| **Background Work** | [WorkManager KTX](https://developer.android.com/topic/libraries/architecture/workmanager) | `2.12.0` | Deferrable background tasks |
 | **Serialization** | [Google Gson](https://github.com/google/gson) | `2.14.0` | Local JSON backup and restore |
 | **Responsive Units** | [SDP & SSP Android](https://github.com/intuit/sdp) | `1.1.1` | Scalable size and font dimensions |
-| **Testing** | JUnit 4, AndroidX JUnit, Espresso, MockK, Coroutines Test | `4.13.2` / `1.14.11` | Unit and UI integration testing |
 
 ---
 
@@ -227,15 +218,6 @@ cd Planora
 
 # macOS / Linux
 ./gradlew compileDebugKotlin
-```
-
-#### Run Unit Tests:
-```bash
-# Windows
-.\gradlew.bat test
-
-# macOS / Linux
-./gradlew test
 ```
 
 #### Assemble Debug APK:

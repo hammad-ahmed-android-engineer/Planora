@@ -288,32 +288,24 @@ fun TaskItemCard(
                 horizontalAlignment = Alignment.End,
                 modifier = Modifier.padding(start = dims.spacing.tiny)
             ) {
-                IconButton(
+                AppIconButton(
                     onClick = debouncedFavorite,
-                    modifier = Modifier.size(dims.components.buttonSmallHeight)
-                ) {
-                    Icon(
-                        imageVector = if (task.isStarred) Icons.Default.Star else Icons.Outlined.StarBorder,
-                        contentDescription = stringResource(R.string.action_favorite),
-                        tint = if (task.isStarred) FlameYellow else MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
-                        modifier = Modifier
-                            .size(dims.icons.medium)
-                            .scale(starScale)
-                    )
-                }
+                    icon = if (task.isStarred) Icons.Default.Star else Icons.Outlined.StarBorder,
+                    contentDescription = stringResource(R.string.action_favorite),
+                    tint = if (task.isStarred) FlameYellow else MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
+                    buttonSize = dims.components.buttonSmallHeight,
+                    iconSize = dims.icons.medium
+                )
 
                 Box {
-                    IconButton(
+                    AppIconButton(
                         onClick = { showMenu = true },
-                        modifier = Modifier.size(dims.components.buttonSmallHeight)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.MoreVert,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
-                            modifier = Modifier.size(dims.icons.small)
-                        )
-                    }
+                        icon = Icons.Default.MoreVert,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
+                        buttonSize = dims.components.buttonSmallHeight,
+                        iconSize = dims.icons.small
+                    )
 
                     DropdownMenu(
                         expanded = showMenu,

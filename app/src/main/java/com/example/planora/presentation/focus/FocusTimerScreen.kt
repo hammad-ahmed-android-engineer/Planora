@@ -11,17 +11,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import com.example.planora.R
-import com.example.planora.core.designsystem.theme.AppTypography
+import com.example.planora.core.designsystem.components.AppTopAppBar
 import com.example.planora.presentation.focus.components.FocusModeSegmentedRow
 import com.example.planora.presentation.focus.components.FocusStatsPill
 import com.example.planora.presentation.focus.components.FocusTimerDial
@@ -41,13 +38,8 @@ fun FocusTimerScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    AppTypography.TitleLarge(text = stringResource(R.string.focus_title))
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                )
+            AppTopAppBar(
+                title = stringResource(R.string.focus_title)
             )
         }
     ) { paddingValues ->

@@ -3,22 +3,18 @@ package com.example.planora.presentation.taskeditor.components
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.planora.R
+import com.example.planora.core.designsystem.components.AppButton
+import com.example.planora.core.designsystem.components.AppTopAppBar
 import com.example.planora.core.designsystem.theme.AppTypography
 import com.example.planora.core.designsystem.theme.dimensions
 import com.example.planora.core.utils.rememberDebouncedClick
@@ -37,26 +33,16 @@ fun TaskEditorTopAppBar(
     val debouncedBack = rememberDebouncedClick(onClick = onNavigateBack)
     val debouncedSave = rememberDebouncedClick(onClick = onSaveTask)
 
-    TopAppBar(
-        title = {
-            AppTypography.TitleLarge(
-                text = if (isEditMode) stringResource(R.string.task_editor_edit_title) else stringResource(R.string.task_editor_create_title)
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = debouncedBack) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.back),
-                    tint = primaryColor
-                )
-            }
-        },
+    AppTopAppBar(
+        title = if (isEditMode) stringResource(R.string.task_editor_edit_title) else stringResource(R.string.task_editor_create_title),
+        onNavigateBack = debouncedBack,
+        navigationIconColor = primaryColor,
         actions = {
-            Button(
+            AppButton(
                 onClick = debouncedSave,
                 enabled = canSave,
-                colors = ButtonDefaults.buttonColors(containerColor = primaryColor),
+                containerColor = primaryColor,
+                contentColor = Color.White,
                 shape = RoundedCornerShape(dims.corners.medium)
             ) {
                 Icon(
@@ -72,9 +58,6 @@ fun TaskEditorTopAppBar(
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background
-        ),
         modifier = modifier
     )
 }

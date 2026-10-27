@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.example.planora.domain.model.Reminder
 import java.util.UUID
 
 @Entity(
@@ -26,4 +27,22 @@ data class ReminderEntity(
     val leadTimeMinutes: Int = 0,
     val isEnabled: Boolean = true,
     val notificationId: Int = (System.currentTimeMillis() % Int.MAX_VALUE).toInt()
+)
+
+fun ReminderEntity.toDomain() = Reminder(
+    id = id,
+    taskId = taskId,
+    triggerTimestamp = triggerTimestamp,
+    leadTimeMinutes = leadTimeMinutes,
+    isEnabled = isEnabled,
+    notificationId = notificationId
+)
+
+fun Reminder.toEntity(taskId: String) = ReminderEntity(
+    id = id,
+    taskId = taskId,
+    triggerTimestamp = triggerTimestamp,
+    leadTimeMinutes = leadTimeMinutes,
+    isEnabled = isEnabled,
+    notificationId = notificationId
 )

@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.planora.R
@@ -37,6 +39,12 @@ fun TaskListContent(
         HomeFilterTab.ALL -> (uiState.todayTasks + uiState.pinnedTasks + uiState.overdueTasks).distinctBy { it.id }
     }
 
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(selectedTab) {
+        listState.scrollToItem(0)
+    }
+
     if (tasksToShow.isEmpty()) {
         EmptyStateView(
             title = when (selectedTab) {
@@ -57,6 +65,7 @@ fun TaskListContent(
         )
     } else {
         LazyColumn(
+            state = listState,
             modifier = modifier.fillMaxWidth()
         ) {
             items(

@@ -1,7 +1,5 @@
 package com.example.planora.presentation.taskdetail.components
 
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,19 +8,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.planora.R
 import com.example.planora.core.designsystem.components.AnimatedTaskCheckbox
 import com.example.planora.core.designsystem.components.AppCard
+import com.example.planora.core.designsystem.components.AppLinearProgressIndicator
 import com.example.planora.core.designsystem.theme.AppTypography
 import com.example.planora.core.designsystem.theme.EmeraldPrimary
 import com.example.planora.core.designsystem.theme.IndigoPrimary
@@ -39,12 +34,6 @@ fun TaskSubtasksCard(
     val dims = dimensions
     val completedCount = task.subtasks.count { it.isCompleted }
     val progress = if (task.subtasks.isNotEmpty()) completedCount.toFloat() / task.subtasks.size.toFloat() else 0f
-
-    val animatedProgress by animateFloatAsState(
-        targetValue = progress,
-        animationSpec = spring(stiffness = 200f),
-        label = "subtaskProgressDetail"
-    )
 
     AppCard(
         modifier = modifier.fillMaxWidth()
@@ -69,14 +58,10 @@ fun TaskSubtasksCard(
 
             Spacer(modifier = Modifier.height(dims.spacing.small))
 
-            LinearProgressIndicator(
-                progress = { animatedProgress },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(dims.spacing.tiny)
-                    .clip(RoundedCornerShape(dims.corners.micro)),
+            AppLinearProgressIndicator(
+                progress = progress,
                 color = EmeraldPrimary,
-                trackColor = MaterialTheme.colorScheme.surfaceVariant
+                modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(dims.spacing.medium))

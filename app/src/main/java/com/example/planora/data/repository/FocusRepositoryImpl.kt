@@ -1,8 +1,8 @@
 package com.example.planora.data.repository
 
 import com.example.planora.data.local.dao.FocusSessionDao
-import com.example.planora.data.mapper.toDomain
-import com.example.planora.data.mapper.toEntity
+import com.example.planora.data.local.entity.toDomain
+import com.example.planora.data.local.entity.toEntity
 import com.example.planora.domain.model.FocusSession
 import com.example.planora.domain.repository.FocusRepository
 import kotlinx.coroutines.flow.Flow

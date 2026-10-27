@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.example.planora.domain.model.Task
 import java.util.UUID
 
 @Entity(
@@ -57,3 +58,38 @@ data class TaskEntity(
     val templateId: String? = null,
     val notes: String = ""
 )
+
+fun Task.toEntity(): TaskEntity {
+    return TaskEntity(
+        id = id,
+        title = title,
+        description = description,
+        createdTimestamp = createdTimestamp,
+        lastModifiedTimestamp = lastModifiedTimestamp,
+        dueDate = dueDate,
+        dueTime = dueTime,
+        startDate = startDate,
+        startTime = startTime,
+        deadline = deadline,
+        priority = priority.name,
+        categoryId = category?.id,
+        isStarred = isStarred,
+        isPinned = isPinned,
+        colorHex = colorHex,
+        estimatedDurationMinutes = estimatedDurationMinutes,
+        actualTimeSpentMinutes = actualTimeSpentMinutes,
+        completionTimestamp = completionTimestamp,
+        isCompleted = isCompleted,
+        isArchived = isArchived,
+        isDeleted = isDeleted,
+        recurrenceType = recurrenceType.name,
+        recurrenceInterval = recurrenceInterval,
+        recurrenceDaysOfWeek = recurrenceDaysOfWeek,
+        recurrenceEndTimestamp = recurrenceEndTimestamp,
+        repeatAfterCompletion = repeatAfterCompletion,
+        locationReminder = locationReminder,
+        parentTaskId = parentTaskId,
+        templateId = templateId,
+        notes = notes
+    )
+}

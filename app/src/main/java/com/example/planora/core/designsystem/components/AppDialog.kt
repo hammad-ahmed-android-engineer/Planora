@@ -48,6 +48,7 @@ fun AppDialog(
     dismissButtonText: String? = null,
     onDismiss: (() -> Unit)? = onDismissRequest,
     isDestructive: Boolean = false,
+    confirmButtonEnabled: Boolean = true,
     shape: Shape = RoundedCornerShape(dimensions.corners.extraLarge),
     containerColor: Color = MaterialTheme.colorScheme.surface,
     properties: DialogProperties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true),
@@ -136,6 +137,7 @@ fun AppDialog(
                             AppButton(
                                 text = confirmButtonText,
                                 onClick = debouncedConfirm,
+                                enabled = confirmButtonEnabled,
                                 containerColor = if (isDestructive) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.weight(1f)
                             )
