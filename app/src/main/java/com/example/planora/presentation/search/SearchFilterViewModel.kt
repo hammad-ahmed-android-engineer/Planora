@@ -1,6 +1,5 @@
 package com.example.planora.presentation.search
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.planora.domain.model.Priority
@@ -13,6 +12,8 @@ import com.example.planora.domain.usecase.SaveTaskUseCase
 import com.example.planora.domain.usecase.ToggleTaskCompletionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -32,47 +33,42 @@ data class SearchFilterUiState(
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class SearchFilterViewModel @Inject constructor(
-    private val getTasksUseCase: GetTasksUseCase,
+    val getTasksUseCase: GetTasksUseCase,
     private val toggleTaskCompletionUseCase: ToggleTaskCompletionUseCase,
     private val saveTaskUseCase: SaveTaskUseCase,
-    private val deleteTaskUseCase: DeleteTaskUseCase,
-    private val savedStateHandle: SavedStateHandle
+    private val deleteTaskUseCase: DeleteTaskUseCase
 ) : ViewModel() {
 
-    companion object {
-        private const val KEY_SEARCH_QUERY = "search_query"
-        private const val KEY_SEARCH_PRIORITY = "search_priority"
-        private const val KEY_SEARCH_CATEGORY = "search_category"
-        private const val KEY_SEARCH_SORT = "search_sort"
+    private val _query = MutableStateFlow("")
+    private val _selectedPriority = MutableStateFlow<Priority?>(null)
+    private val _selectedCategoryId = MutableStateFlow<String?>(null)
+    private val _sortOption = MutableStateFlow(TaskSortOption.DUE_DATE)
+
+    private val searchResultsFlow: Flow<List<Task>> = combine(
+        _query,
+        _selectedPriority,
+        _selectedCategoryId,
+        _sortOption
+    ) { query, priority, categoryId, sort ->
+        Triple(query, TaskFilter(priority = priority, categoryId = categoryId), sort)
+    }.flatMapLatest { (q, filter, sort) ->
+        getTasksUseCase.searchTasks(q, filter, sort)
     }
 
-    private val queryFlow = savedStateHandle.getStateFlow(KEY_SEARCH_QUERY, "")
-    private val priorityFlow = savedStateHandle.getStateFlow<String?>(KEY_SEARCH_PRIORITY, null)
-    private val categoryFlow = savedStateHandle.getStateFlow<String?>(KEY_SEARCH_CATEGORY, null)
-    private val sortFlow = savedStateHandle.getStateFlow(KEY_SEARCH_SORT, TaskSortOption.DUE_DATE.name)
-
     val uiState: StateFlow<SearchFilterUiState> = combine(
-        queryFlow,
-        priorityFlow,
-        categoryFlow,
-        sortFlow
-    ) { query, priorityStr, catId, sortStr ->
-        val priority = priorityStr?.let { runCatching { Priority.valueOf(it) }.getOrNull() }
-        val sort = runCatching { TaskSortOption.valueOf(sortStr) }.getOrDefault(TaskSortOption.DUE_DATE)
-        val filter = TaskFilter(priority = priority, categoryId = catId)
-        Triple(query, filter, sort)
-    }.flatMapLatest { (q, filter, sort) ->
-        getTasksUseCase.searchTasks(q, filter, sort).combine(queryFlow) { results, query ->
-            val priority = priorityFlow.value?.let { runCatching { Priority.valueOf(it) }.getOrNull() }
-            val sortOption = runCatching { TaskSortOption.valueOf(sortFlow.value) }.getOrDefault(TaskSortOption.DUE_DATE)
-            SearchFilterUiState(
-                query = query,
-                selectedPriority = priority,
-                selectedCategoryId = categoryFlow.value,
-                sortOption = sortOption,
-                searchResults = results
-            )
-        }
+        _query,
+        _selectedPriority,
+        _selectedCategoryId,
+        _sortOption,
+        searchResultsFlow
+    ) { query, priority, categoryId, sort, results ->
+        SearchFilterUiState(
+            query = query,
+            selectedPriority = priority,
+            selectedCategoryId = categoryId,
+            sortOption = sort,
+            searchResults = results
+        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -80,26 +76,26 @@ class SearchFilterViewModel @Inject constructor(
     )
 
     fun updateQuery(q: String) {
-        savedStateHandle[KEY_SEARCH_QUERY] = q
+        _query.value = q
     }
 
     fun setPriority(prio: Priority?) {
-        savedStateHandle[KEY_SEARCH_PRIORITY] = prio?.name
+        _selectedPriority.value = prio
     }
 
     fun setCategoryId(catId: String?) {
-        savedStateHandle[KEY_SEARCH_CATEGORY] = catId
+        _selectedCategoryId.value = catId
     }
 
     fun setSortOption(sort: TaskSortOption) {
-        savedStateHandle[KEY_SEARCH_SORT] = sort.name
+        _sortOption.value = sort
     }
 
     fun clearFilters() {
-        savedStateHandle[KEY_SEARCH_QUERY] = ""
-        savedStateHandle[KEY_SEARCH_PRIORITY] = null
-        savedStateHandle[KEY_SEARCH_CATEGORY] = null
-        savedStateHandle[KEY_SEARCH_SORT] = TaskSortOption.DUE_DATE.name
+        _query.value = ""
+        _selectedPriority.value = null
+        _selectedCategoryId.value = null
+        _sortOption.value = TaskSortOption.DUE_DATE
     }
 
     fun toggleTaskComplete(task: Task) {
